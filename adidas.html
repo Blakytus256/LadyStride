@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adidas - Tienda Zapatillera</title>
+  <link rel="stylesheet" href="styles/adidas.css" />
+  <link rel="stylesheet" href="css/animaciones.css">
+</head>
+
+<body>
+  <header class="header-principal">
+    <img src="img/adidasblanco.png" alt="Logo Adidas" class="logo-marca" />
+    <div class="contenedor-header">
+      <a href="zonadecompras.html" class="carrito-icono">
+        <img src="img/carrito1.png" alt="Carrito de compras">
+        <span class="carrito-contador" id="carrito-contador">0</span>
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+      </nav>
+    </div>
+  </header>
+  </header>
+
+  <section class="catalogo">
+    <div class="producto">
+      <img src="img/adidas1.jpg" alt="Adidas UltraBoost 21 Cloud White" />
+      <h2>Adidas UltraBoost 21 Cloud White</h2>
+      <p class="precio">S/. 379</p>
+      <p class="codigo">FY0379</p>
+      <p class="detalles">Running premium. Tallas: 38‑44.</p>
+      <button class="btn-agregar" data-nombre="UltraBoost 21 Cloud White" data-precio="379" data-codigo="FY0379"
+        data-detalles="Running premium. Tallas: 38‑44." data-imagen="img/adidas1.jpg">
+        Agregar al carrito
+      </button>
+    </div>
+
+    <div class="producto">
+      <img src="img/adidas2.jpg" alt="Adidas UltraBoost Stella McCartney" />
+      <h2>UltraBoost 21 by Stella McCartney</h2>
+      <p class="precio">S/. 399</p>
+      <p class="codigo">HQ5963</p>
+      <p class="detalles">Edición Stella McCartney. Tallas: 36‑43.</p>
+      <button class="btn-agregar" data-nombre="UltraBoost 21 Stella McCartney" data-precio="399" data-codigo="HQ5963"
+        data-detalles="Edición Stella McCartney. Tallas: 36‑43." data-imagen="img/adidas2.jpg">
+        Agregar al carrito
+      </button>
+    </div>
+
+    <div class="producto">
+      <img src="img/adidas3.jpg" alt="Adidas UltraBoost 21 Sashiko" />
+      <h2>UltraBoost 21 Primeblue Sashiko</h2>
+      <p class="precio">S/. 389</p>
+      <p class="codigo">FX7729</p>
+      <p class="detalles">Primeblue sostenible. Tallas: 38‑44.</p>
+      <button class="btn-agregar" data-nombre="UltraBoost 21 Primeblue Sashiko" data-precio="389" data-codigo="FX7729"
+        data-detalles="Primeblue sostenible. Tallas: 38‑44." data-imagen="img/adidas3.jpg">
+        Agregar al carrito
+      </button>
+    </div>
+
+    <div class="producto">
+      <img src="img/adidas4.jpg" alt="Adidas Forum Low CL" />
+      <h2>Adidas Forum Low CL</h2>
+      <p class="precio">S/. 279</p>
+      <p class="codigo">IH7914</p>
+      <p class="detalles">Retro Originals. Tallas: 36‑43.</p>
+      <button class="btn-agregar" data-nombre="Forum Low CL" data-precio="279" data-codigo="IH7914"
+        data-detalles="Retro Originals. Tallas: 36‑43." data-imagen="img/adidas4.jpg">
+        Agregar al carrito
+      </button>
+    </div>
+  </section>
+
+  <section class="brand-buttons">
+    <a href="umbro.html" class="brand-button">
+      <img src="img/umbrologo.png" alt="Umbro" />
+    </a>
+    <a href="adidas.html" class="brand-button">
+      <img src="img/adidas.png" alt="Adidas" />
+    </a>
+    <a href="nike.html" class="brand-button">
+      <img src="img/nike.jpg" alt="Nike" />
+    </a>
+    <a href="puma.html" class="brand-button">
+      <img src="img/puma.jpg" alt="Puma" />
+    </a>
+    <a href="converse.html" class="brand-button">
+      <img src="img/converse.jpg" alt="Converse" />
+    </a>
+  </section>
+
+  <script>
+    document.querySelectorAll('.btn-agregar').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const producto = this.closest('.producto');
+        const nombre = producto.querySelector('h2').textContent;
+        const precio = parseFloat(producto.querySelector('.precio').textContent.replace('S/.', '').trim());
+        const codigo = producto.querySelector('.codigo').textContent.trim();
+        const detalles = producto.querySelector('.detalles').textContent.trim();
+        const imagen = producto.querySelector('img').getAttribute('src');
+
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        const index = carrito.findIndex(item => item.codigo === codigo);
+        if (index !== -1) {
+          carrito[index].cantidad += 1;
+        } else {
+          carrito.push({ nombre, precio, codigo, detalles, imagen, cantidad: 1 });
+        }
+
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+
+      });
+    });
+  </script>
+  <script src="animaciones.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const contador = document.getElementById('carrito-contador');
+      if (contador) {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const totalCantidad = carrito.reduce((sum, producto) => sum + producto.cantidad, 0);
+        contador.textContent = totalCantidad;
+      }
+    });
+  </script>
+
+</body>
+
+</html>

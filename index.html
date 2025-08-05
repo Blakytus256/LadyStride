@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <link rel="icon" type="image/png" href="img/logomini1.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda de Zapatillas</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+</head>
+<header class="header-principal">
+  <h1></h1> <!-- sub titulo falso para que 
+  el carrito de compras
+   aparezca en el lado derecho -->
+  <div class="contenedor-header">
+    <a href="zonadecompras.html" class="carrito-icono">
+      <img src="img/carrito1.png" alt="Carrito de compras">
+      <span class="carrito-contador" id="carrito-contador">0</span>
+    </a>
+
+  </div>
+
+</header>
+
+<body>
+
+  <header class="header">
+    <img src="img/logojenny.webp" alt="LadyStride Logo" class="logo">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  </header>
+
+
+  <!-- Este div es donde React montará tu app -->
+  <div id="root"></div>
+
+  <!-- Contenedor del avioncito -->
+  <div class="airplane-container" id="airplaneContainer">
+    <div class="airplane" id="airplane">
+      <svg viewBox="0 0 24 24" fill="#000" stroke="#000" stroke-width="2">
+        <path
+          d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Contenido HTML tradicional -->
+
+  <section id="inicio" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-bg-next"></div>
+    <div class="hero-content">
+      <div class="hero-text-container">
+        <h2 class="hero-text">Descubre las mejores zapatillas urbanas</h2>
+      </div>
+
+      <p>Elige entre tus marcas favoritas: Puma, Converse, Adidas, Nike y Umbro</p>
+    </div>
+  </section>
+
+
+  <section id="marcas" class="brands">
+    <h2>Marcas destacadas</h2>
+    <div class="brand-logos">
+      <a href="puma.html"><img src="img/puma.jpg" alt="Puma" /></a>
+      <a href="converse.html"><img src="img/converse.jpg" alt="Converse" /></a>
+      <a href="adidas.html"><img src="img/adidas.png" alt="Adidas" /></a>
+      <a href="nike.html"><img src="img/nike.jpg" alt="Nike" /></a>
+      <a href="umbro.html"><img src="img/umbrologo.png" alt="Umbro" /></a>
+    </div>
+  </section>
+
+  <section id="contacto" class="contact-modern">
+    <div class="contact-container">
+      <h2>Contáctanos</h2>
+      <form>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+        <div class="input-group">
+          <label for="nombre"><i class="fa fa-user"></i> Nombre</label>
+          <input type="text" id="nombre" placeholder="Tu nombre" required />
+        </div>
+
+
+        <div class="input-group">
+          <label for="correo"><i class="fa-solid fa-envelope"></i> Correo electrónico</label>
+          <input type="email" id="correo" placeholder="tucorreo@example.com" required />
+        </div>
+
+
+        <div class="input-group">
+          <label for="mensaje"><i class="fa-solid fa-message"></i> Mensaje</label>
+          <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+        </div>
+
+        <button type="submit">Enviar mensaje</button>
+        <div id="mensaje-exito" class="mensaje-exito">¡Gracias por contactarnos! Te responderemos pronto.</div>
+
+
+      </form>
+    </div>
+  </section>
+  <script>
+    const images = [
+      'img/converse1.webp',
+      'img/umbro1.webp',
+      'img/puma1.webp',
+      'img/adidas1.webp',
+      'img/nike1.webp',
+      'img/partedezapato.webp',
+      'img/foto1.jpg',
+      'img/foto2.jpg',
+      'img/foto3.jpg'
+    ];
+
+    let index = 0;
+    const bg = document.querySelector('.hero-bg');
+    const nextBg = document.querySelector('.hero-bg-next');
+
+    function changeBackground() {
+      // Establece la siguiente imagen
+      nextBg.style.backgroundImage = `url(${images[index]})`;
+
+      // Aplica transición
+      nextBg.style.opacity = 1;
+      bg.style.opacity = 0;
+
+      // Intercambia las clases tras la transición
+      imeout(() => {
+        bg.style.backgroundImage = nextBg.style.backgroundImage;
+        bg.style.opacity = 1;
+        nextBg.style.opacity = 0;
+        index = (index + 1) % isetTmages.length;
+      }, 1500); // Coincide con el tiempo de transición en CSS
+    }
+
+    changeBackground();
+    setInterval(changeBackground, 6000);
+  </script>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const btn = document.querySelector('.whatsapp-float');
+      if (window.scrollY > 300) {
+        btn.style.opacity = '1';
+      } else {
+        btn.style.opacity = '0';
+      }
+    });
+  </script>
+
+  <!-- Script del avioncito volador -->
+  <script>
+    class FlyingAirplane {
+      constructor(airplaneId = 'airplane', containerId = 'airplaneContainer') {
+        this.airplane = document.getElementById(airplaneId);
+        this.container = document.getElementById(containerId);
+
+        this.trails = [];
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.vx = (Math.random() - 0.5) * 4; // Velocidad horizontal
+        this.vy = (Math.random() - 0.5) * 4; // Velocidad vertical
+        this.lastTrailTime = 0;
+        this.trailInterval = 150; // Intervalo entre líneas de pista en ms
+
+        this.init();
+      }
+
+      init() {
+        this.animate();
+        this.cleanupTrails();
+
+        // Actualizar dimensiones al cambiar tamaño de ventana
+        window.addEventListener('resize', () => {
+          // Ajustar posición si está fuera de los nuevos límites
+          if (this.x > window.innerWidth) this.x = window.innerWidth - 50;
+          if (this.y > window.innerHeight) this.y = window.innerHeight - 50;
+        });
+      }
+
+      isInWhiteArea(x, y) {
+        // Verificar si está en las secciones blancas (brands y contact-modern)
+        const brandsSection = document.getElementById('marcas');
+        const contactSection = document.getElementById('contacto');
+
+        if (brandsSection) {
+          const brandsRect = brandsSection.getBoundingClientRect();
+          if (y >= brandsRect.top && y <= brandsRect.bottom) {
+            return true;
+          }
+        }
+
+        if (contactSection) {
+          const contactRect = contactSection.getBoundingClientRect();
+          if (y >= contactRect.top && y <= contactRect.bottom) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      createTrailDash(x, y, angle) {
+        if (!this.isInWhiteArea(x, y)) return;
+
+        const dash = document.createElement('div');
+        dash.className = 'trail-dash';
+
+        dash.style.left = (x - 4) + 'px';
+        dash.style.top = (y - 1) + 'px';
+        dash.style.transform = `rotate(${angle}rad)`;
+        dash.style.transformOrigin = 'center';
+
+        this.container.appendChild(dash);
+        this.trails.push(dash);
+
+        // Animar el desvanecimiento
+        setTimeout(() => {
+          dash.style.animation = 'fadeTrail 3s ease-out forwards';
+        }, 100);
+
+        // Remover después de la animación
+        setTimeout(() => {
+          if (dash.parentNode) {
+            dash.parentNode.removeChild(dash);
+          }
+          const index = this.trails.indexOf(dash);
+          if (index > -1) {
+            this.trails.splice(index, 1);
+          }
+        }, 3200);
+      }
+
+      animate() {
+        const currentTime = Date.now();
+
+        // Actualizar posición
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Comprobar colisiones con bordes y aparecer por el otro lado
+        if (this.x < -25) {
+          this.x = window.innerWidth + 25;
+        } else if (this.x > window.innerWidth + 25) {
+          this.x = -25;
+        }
+
+        if (this.y < -25) {
+          this.y = window.innerHeight + 25;
+        } else if (this.y > window.innerHeight + 25) {
+          this.y = -25;
+        }
+
+        // Crear líneas de pista en intervalos regulares
+        if (currentTime - this.lastTrailTime > this.trailInterval) {
+          const angle = Math.atan2(this.vy, this.vx);
+          this.createTrailDash(this.x, this.y, angle);
+          this.lastTrailTime = currentTime;
+        }
+
+        // Calcular rotación del avión basada en la dirección
+        const rotation = Math.atan2(this.vy, this.vx) * (180 / Math.PI);
+
+        // Actualizar posición y rotación del avión
+        this.airplane.style.left = (this.x - 12.5) + 'px';
+        this.airplane.style.top = (this.y - 12.5) + 'px';
+        this.airplane.style.transform = `rotate(${rotation + 90}deg)`;
+
+        requestAnimationFrame(() => this.animate());
+      }
+
+      cleanupTrails() {
+        // Limpiar trails antiguos cada 5 segundos
+        setInterval(() => {
+          this.trails.forEach((trail, index) => {
+            if (trail.parentNode && parseFloat(getComputedStyle(trail).opacity) <= 0.1) {
+              trail.parentNode.removeChild(trail);
+              this.trails.splice(index, 1);
+            }
+          });
+        }, 5000);
+      }
+    }
+
+    // Inicializar el avión cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', () => {
+      new FlyingAirplane();
+    });
+
+  </script>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("bounce-in");
+          observer.unobserve(entry.target); // Evita repetir la animación
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+
+    sections.forEach(section => {
+      section.classList.add("invisible"); // Para que no aparezca sin animar
+      observer.observe(section);
+    });
+
+  </script>
+  <script>
+    const form = document.querySelector("form");
+    const correoInput = document.getElementById("correo");
+    const mensajeExito = document.getElementById("mensaje-exito");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (!correoInput.checkValidity()) {
+        alert("Por favor, ingresa un correo electrónico válido.");
+        correoInput.focus();
+        return;
+      }
+
+      // Mostrar como "bloque" y reiniciar animación
+      mensajeExito.style.display = "block";
+      mensajeExito.style.opacity = "1";
+      mensajeExito.style.transform = "scale(1)";
+      mensajeExito.classList.add("fade-in");
+
+      form.reset();
+
+      // Ocultar después de 4 segundos con transición suave
+      setTimeout(() => {
+        mensajeExito.style.opacity = "0";
+        mensajeExito.style.transform = "scale(0.9)";
+      }, 4000);
+
+      setTimeout(() => {
+        mensajeExito.style.display = "none";
+      }, 4500);
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const contador = document.getElementById('carrito-contador');
+      if (contador) {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const totalCantidad = carrito.reduce((sum, producto) => sum + producto.cantidad, 0);
+        contador.textContent = totalCantidad;
+      }
+    });
+  </script>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <h2 class="logo-elegante">Lady Stride</h2>
+
+        <p>&copy; 2025 Todos los derechos reservados.</p>
+      </div>
+
+      <div class="footer-contact">
+        <p>Contacto: +51 000000000</p>
+        <p>Email: contacto@zapatillera.com</p>
+        <div class="social-icons">
+
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <link rel="icon" type="image/png" href="img/logomini1.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puma - Tienda Zapatillera</title>
+  <link rel="stylesheet" href="styles/puma.css" />
+</head>
+
+<body>
+  <header class="header-principal">
+    <h1 class="titulo-elegante">
+      <img src="img/pumablanco.png" alt="Puma" class="logo-puma" />
+    </h1>
+
+    <div class="contenedor-header">
+      <a href="zonadecompras.html" class="carrito-icono">
+        <img src="img/carrito1.png" alt="Carrito de compras">
+        <span class="carrito-contador" id="carrito-contador">0</span>
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="catalogo">
+    <div class="producto">
+      <img src="img/puma.jpg" alt="Puma Smash V2" />
+      <h2>Puma Smash V2</h2>
+      <p class="precio">S/. 199</p>
+      <p class="codigo">Código: PUMA-001</p>
+      <p class="detalles">Estilo casual de gamuza. Tallas: 38 al 44.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/puma.jpg" alt="Puma RS-X" />
+      <h2>Puma RS-X</h2>
+      <p class="precio">S/. 329</p>
+      <p class="codigo">Código: PUMA-002</p>
+      <p class="detalles">Diseño chunky retro. Tallas: 39 al 45.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/puma.jpg" alt="Puma Future Rider" />
+      <h2>Puma Future Rider</h2>
+      <p class="precio">S/. 289</p>
+      <p class="codigo">Código: PUMA-003</p>
+      <p class="detalles">Estilo urbano con amortiguación. Tallas: 37 al 42.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/puma.jpg" alt="Puma X-Ray 2 Square" />
+      <h2>Puma X-Ray 2 Square</h2>
+      <p class="precio">S/. 309</p>
+      <p class="codigo">Código: PUMA-004</p>
+      <p class="detalles">Estilo futurista. Tallas: 39 al 44.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+  </section>
+
+  <section class="brand-buttons">
+    <a href="umbro.html" class="brand-button">
+      <img src="img/umbrologo.png" alt="Umbro" />
+    </a>
+    <a href="adidas.html" class="brand-button">
+      <img src="img/adidas.png" alt="Adidas" />
+    </a>
+    <a href="nike.html" class="brand-button">
+      <img src="img/nike.jpg" alt="Nike" />
+    </a>
+    <a href="puma.html" class="brand-button">
+      <img src="img/puma.jpg" alt="Puma" />
+    </a>
+    <a href="converse.html" class="brand-button">
+      <img src="img/converse.jpg" alt="Converse" />
+    </a>
+  </section>
+
+  <script>
+    document.querySelectorAll('.btn-agregar').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const producto = this.closest('.producto');
+        const nombre = producto.querySelector('h2').textContent;
+        const precio = parseFloat(producto.querySelector('.precio').textContent.replace('S/.', '').trim());
+        const codigo = producto.querySelector('.codigo').textContent.replace('Código: ', '').trim();
+        const detalles = producto.querySelector('.detalles').textContent;
+        const imagen = producto.querySelector('img').getAttribute('src');
+
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        const index = carrito.findIndex(item => item.codigo === codigo);
+        if (index !== -1) {
+          carrito[index].cantidad += 1;
+        } else {
+          carrito.push({ nombre, precio, codigo, detalles, imagen, cantidad: 1 });
+        }
+
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        
+      });
+    });
+  </script>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("bounce-in");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(section => {
+      section.classList.add("invisible");
+      observer.observe(section);
+    });
+  </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const contador = document.getElementById('carrito-contador');
+    if (contador) {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const totalCantidad = carrito.reduce((sum, producto) => sum + producto.cantidad, 0);
+      contador.textContent = totalCantidad;
+    }
+  });
+</script>
+
+</body>
+
+</html>

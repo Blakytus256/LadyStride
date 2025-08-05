@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <link rel="icon" type="image/png" href="img/logomini1.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Umbro - Tienda Zapatillera</title>
+  <link rel="stylesheet" href="styles/umbro.css" />
+</head>
+
+<body>
+  <header class="header-principal">
+    <h1 class="titulo-elegante">
+      <img src="img/umbrologo.png" alt="Logo Umbro" class="logo-marca" />
+    </h1>
+
+    <div class="contenedor-header">
+      <a href="zonadecompras.html" class="carrito-icono">
+        <img src="img/carrito1.png" alt="Carrito de compras">
+        <span class="carrito-contador" id="carrito-contador">0</span>
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="catalogo">
+    <div class="producto">
+      <img src="img/umbrologo.png" alt="Umbro Classic" />
+      <h2>Umbro Classic</h2>
+      <p class="precio">S/. 189</p>
+      <p class="codigo">Código: UMBRO-001</p>
+      <p class="detalles">Diseño retro y suela de goma. Tallas: 38 al 43.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/umbrologo.png" alt="Umbro Runner" />
+      <h2>Umbro Runner</h2>
+      <p class="precio">S/. 209</p>
+      <p class="codigo">Código: UMBRO-002</p>
+      <p class="detalles">Zapatilla deportiva liviana. Tallas: 39 al 44.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/umbrologo.png" alt="Umbro Street" />
+      <h2>Umbro Street</h2>
+      <p class="precio">S/. 229</p>
+      <p class="codigo">Código: UMBRO-003</p>
+      <p class="detalles">Estilo urbano y resistente. Tallas: 37 al 42.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+
+    <div class="producto">
+      <img src="img/umbrologo.png" alt="Umbro Fútbol Pro" />
+      <h2>Umbro Fútbol Pro</h2>
+      <p class="precio">S/. 249</p>
+      <p class="codigo">Código: UMBRO-004</p>
+      <p class="detalles">Diseño para campo sintético. Tallas: 38 al 45.</p>
+      <button class="btn-agregar">Agregar al carrito</button>
+    </div>
+
+
+  </section>
+
+  <section class="brand-buttons">
+    <a href="umbro.html" class="brand-button">
+      <img src="img/umbrologo.png" alt="Umbro" />
+    </a>
+    <a href="adidas.html" class="brand-button">
+      <img src="img/adidas.png" alt="Adidas" />
+    </a>
+    <a href="nike.html" class="brand-button">
+      <img src="img/nike.jpg" alt="Nike" />
+    </a>
+    <a href="puma.html" class="brand-button">
+      <img src="img/puma.jpg" alt="Puma" />
+    </a>
+    <a href="converse.html" class="brand-button">
+      <img src="img/converse.jpg" alt="Converse" />
+    </a>
+  </section>
+
+  <script>
+    document.querySelectorAll('.btn-agregar').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const producto = this.closest('.producto');
+        const nombre = producto.querySelector('h2').textContent;
+        const precio = parseFloat(producto.querySelector('.precio').textContent.replace('S/.', '').trim());
+        const codigo = producto.querySelector('.codigo').textContent.replace('Código: ', '').trim();
+        const detalles = producto.querySelector('.detalles').textContent;
+        const imagen = producto.querySelector('img').getAttribute('src');
+
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        const index = carrito.findIndex(item => item.codigo === codigo);
+        if (index !== -1) {
+          carrito[index].cantidad += 1;
+        } else {
+          carrito.push({ nombre, precio, codigo, detalles, imagen, cantidad: 1 });
+        }
+
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        
+
+      });
+    });
+  </script>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("bounce-in");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+
+    sections.forEach(section => {
+      section.classList.add("invisible");
+      observer.observe(section);
+    });
+  </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const contador = document.getElementById('carrito-contador');
+    if (contador) {
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const totalCantidad = carrito.reduce((sum, producto) => sum + producto.cantidad, 0);
+      contador.textContent = totalCantidad;
+    }
+  });
+</script>
+
+</body>
+
+</html>
